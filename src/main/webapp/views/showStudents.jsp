@@ -7,9 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h1>Results:</h1>
-	Result of addition operation is ${sumOfTwoIntegers} 
-	<br><br>
-	Result of multiplication operation is ${productOfTwoIntegers} 
+	Student list is ${studentList}
 </body>
 </html>
