@@ -17,8 +17,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.techproed.modelattribute.Student;
-
 @Controller
 public class ResultController {
 	
@@ -35,7 +33,7 @@ public class ResultController {
 //		session.setAttribute("sumOfNumbers", sum);
 //		session.setAttribute("productOfNumbers", product);
 //		
-//		return "result.jsp";
+//		return "result";
 //	}
 	
 	//2.Way
@@ -52,6 +50,7 @@ public class ResultController {
 //	}
 	
 	//3.Way
+	//First way of using ModelAndView
 //	@RequestMapping("add")
 //	public ModelAndView addAndMultiplyNums3(@RequestParam("n1") int a, @RequestParam("n2") int b) {
 //		
@@ -68,6 +67,7 @@ public class ResultController {
 //	}
 	
 	//4.Way
+	//Second way of using ModelAndView (Recommended)
 //	@RequestMapping("add")
 //	public ModelAndView addAndMultiplyNums4(@RequestParam("n1") int a, @RequestParam("n2") int b) {
 //		
@@ -89,52 +89,55 @@ public class ResultController {
 //		int sum = a + b;
 //		int product = a * b;
 //		
-//		//Usage 1
+//		//First usage
 ////		m.addAttribute("sumOfNumbers", sum);
 ////		m.addAttribute("productOfNumbers", product);
 //		
-//		//Usage 2
+//		//Second usage
 //		m.addAttribute("sumOfNumbers", sum)
 //		 .addAttribute("productOfNumbers", product);
-//		
+//
 //		return "result";
 //	}
 	
 	//6.Way
 //	@RequestMapping("add")
-//	public String addAndMultiplyNums5(@RequestParam("n1") int a, @RequestParam("n2") int b, ModelMap m) {
+//	public String addAndMultiplyNums6(@RequestParam("n1") int a, @RequestParam("n2") int b, ModelMap mm) {
 //		
 //		int sum = a + b;
 //		int product = a * b;
 //		
-//		//Usage 1
-//		m.addAttribute("sumOfNumbers", sum);
-//		m.addAttribute("productOfNumbers", product);
+//		//First usage
+////		mm.addAttribute("sumOfNumbers", sum);
+////		mm.addAttribute("productOfNumbers", product);
 //		
-//		//Usage 2
-////		m.addAttribute("sumOfNumbers", sum)
-////		 .addAttribute("productOfNumbers", product);
-//		
+//		//Second usage
+//		mm.addAttribute("sumOfNumbers", sum)
+//		 .addAttribute("productOfNumbers", product);
+//
 //		return "result";
 //	}
-	
-	//******************************************************************************************************
-	
+
+//**************************************************************************************************************************
 	//1.Way
-//	@RequestMapping("addStudents")
+//	@RequestMapping("addStudent")
 //	public String addStudent1(@RequestParam("id") int id, @RequestParam("name") String name, Model m) {
 //		
-//		Student student = new Student();
-//		student.setId(id);
-//		student.setName(name);
+//		//First object creation way
+////		Student student = new Student();
+////		student.setId(id);
+////		student.setName(name);
+//		
+//		//Second object creation way
+//		Student student = new Student(id, name);
 //		
 //		m.addAttribute("studentObject", student);
-//			
-//		return "result";
+//		
+//		return "result";		
 //	}
 	
 	//2.Way
-//	@RequestMapping("addStudents")
+//	@RequestMapping("addStudent")
 //	public String addStudent2(@ModelAttribute Student student, Model m) {
 //		
 //		m.addAttribute("studentObject", student);
@@ -143,69 +146,87 @@ public class ResultController {
 //	}
 	
 	//3.Way
-	//How to get a specific data from object
-	//Note: You need to use @RequestMapping("addStudents") first then use @ModelAttribute
-//	@RequestMapping("addStudents")
+//	@RequestMapping("addStudent")
+//	public String addStudent3(@ModelAttribute("studentObject") Student student) {
+//		return "result";
+//	}
+//	
+//	//How to get a specific field from an object
+//	@ModelAttribute
+//	public void greetStudent(Model m, Student student) {
+//		m.addAttribute("greetStudent", student.getName());
+//	}
+	
+	//How to use POST Method
+	//1.Way
+	/*
+	  To use POST Method 
+	  1)Inside the method paranthesis type "method = RequestMethod.POST"
+	  2)Go to index.jsp file and add "method = "post"" inside the form tag 
+	*/
+//	@RequestMapping(value = "addStudent", method = RequestMethod.POST)
 //	public String addStudent3(@ModelAttribute("studentObject") Student student) {
 //		return "result";
 //	}
 //	
 //	@ModelAttribute
 //	public void greetStudent(Model m, Student student) {
-//		m.addAttribute("greetStd", student.getName());
+//		m.addAttribute("greetStudent", student.getName());
 //	}
 	
-	//4.Way
-	//How to use POST Request
+	//2.Way
+	/*
+	  To use POST Method 
+	  1)Use @PostMapping("addStudent") with action name from the form tag
+	  2)Go to index.jsp file and add " method = "post" " inside the form tag 
+	*/
+//	@PostMapping("addStudent")
+//	public String addStudent3(@ModelAttribute("studentObject") Student student) {
+//		return "result";
+//	}
+//	
+//	@ModelAttribute
+//	public void greetStudent(Model m, Student student) {
+//		m.addAttribute("greetStudent", student.getName());
+//	}
 	
-		//1.Way of Using POST Request
-//		@RequestMapping(value = "addStudents", method = RequestMethod.POST)
-//		public String addStudent4(@ModelAttribute("studentObject") Student student) {
-//			return "result";
-//		}
+	//How to use GET Method
+	//1.Way
+		/*
+		  To use GET Method 
+		  1)Inside the method paranthesis type "method = RequestMethod.GET"
+		  2)Go to index.jsp file and add "method = "get"" inside the form tag 
+		  3)Go to result.jsp file and type ==> ${studentList}
+		*/
+//	@RequestMapping(value = "getStudent", method = RequestMethod.GET)
+//	public String getStudent(Model m) {
 //		
-//		@ModelAttribute
-//		public void greetStudent(Model m, Student student) {
-//			m.addAttribute("greetStd", student.getName());
-//		}
-		
-		//2.Way of Using POST Request
-		@PostMapping("addStudents")
-		public String addStudent5(@ModelAttribute("studentObject") Student student) {
-			return "result";
-		}
-		
-		@ModelAttribute
-		public void greetStudent(Model m, Student student) {
-			m.addAttribute("greetStd", student.getName());
-		}
+//		List<Student> students = new ArrayList<>();
+//		students.add(new Student(101, "Ali Can"));
+//		students.add(new Student(102, "Veli Han"));
+//		students.add(new Student(103, "Mary Star"));
+//		students.add(new Student(104, "Tom Hanks"));
+//		students.add(new Student(105, "Angie Ocean"));
+//		
+//		m.addAttribute("studentList", students);
+//		
+//		return "result";
+//	}
 	
-	//5.Way
-	//How to use GET Request	
-	@GetMapping("getStudents")
-	public String getStudents(Model m) {
+	//2.Way
+	@GetMapping("getStudent")
+	public String getStudent(Model m) {
 		
 		List<Student> students = new ArrayList<>();
 		students.add(new Student(101, "Ali Can"));
-		students.add(new Student(102, "Mary Star"));
-		students.add(new Student(103, "Angie Ocean"));
-		students.add(new Student(104, "Veli Han"));
-		students.add(new Student(105, "Tom Hanks"));
+		students.add(new Student(102, "Veli Han"));
+		students.add(new Student(103, "Mary Star"));
+		students.add(new Student(104, "Tom Hanks"));
+		students.add(new Student(105, "Angie Ocean"));
 		
 		m.addAttribute("studentList", students);
 		
-		return "showStudents";
+		return "result";
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
 }

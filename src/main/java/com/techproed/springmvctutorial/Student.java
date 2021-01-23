@@ -1,17 +1,16 @@
-package com.techproed.modelattribute;
+package com.techproed.springmvctutorial;
 
 public class Student {
 	
 	private int id;
 	private String name;
-	
+
 	public Student(int id, String name) {
 		this.id = id;
 		this.name = name;
 	}
-	
 	public Student() {
-		
+
 	}
 	
 	public int getId() {
@@ -29,7 +28,7 @@ public class Student {
 	
 	@Override
 	public String toString() {
-		return "Student [id=" + id + ", name=" + name + "]";
+		return "Student id=" + id + ", name=" + name + "";
 	}
 
 }
