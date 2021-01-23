@@ -214,8 +214,24 @@ public class ResultController {
 //	}
 	
 	//2.Way
-	@GetMapping("getStudent")
-	public String getStudent(Model m) {
+//	@GetMapping("getStudent")
+//	public String getAllStudents(Model m) {
+//		
+//		List<Student> students = new ArrayList<>();
+//		students.add(new Student(101, "Ali Can"));
+//		students.add(new Student(102, "Veli Han"));
+//		students.add(new Student(103, "Mary Star"));
+//		students.add(new Student(104, "Tom Hanks"));
+//		students.add(new Student(105, "Angie Ocean"));
+//		
+//		m.addAttribute("studentList", students);
+//		
+//		return "result";
+//	}
+	
+	//How to get a specific student by using student id
+	@GetMapping("getStudentWithId")
+	public String getStudent(@RequestParam("id") int id, Model m) {
 		
 		List<Student> students = new ArrayList<>();
 		students.add(new Student(101, "Ali Can"));
@@ -224,9 +240,34 @@ public class ResultController {
 		students.add(new Student(104, "Tom Hanks"));
 		students.add(new Student(105, "Angie Ocean"));
 		
-		m.addAttribute("studentList", students);
+		int idx = -1;
+		
+		for(Student w: students) {
+			if(id == w.getId()) {
+				idx = students.indexOf(w);
+			}
+		}
+		
+		if(idx == -1 || !(new Integer(id) instanceof Integer)) {
+			m.addAttribute("specificStudent", "There is no student with this id");
+		}else {
+			m.addAttribute("specificStudent", students.get(idx));
+		}	
 		
 		return "result";
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 }

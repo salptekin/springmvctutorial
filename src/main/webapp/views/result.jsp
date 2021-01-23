@@ -18,7 +18,10 @@
 	<h1>Greetings:</h1>
 	Welcome back ${greetStudent} --%>
 	
-	<h1>Student List:</h1>
-	All students are ${studentList}
+<%-- 	<h1>Student List:</h1>
+	All students are ${studentList} --%>
+	
+	<h1>Get student with id:</h1>
+	The student is ${specificStudent}
 </body>
 </html>

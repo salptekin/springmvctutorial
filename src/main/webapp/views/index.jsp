@@ -33,8 +33,14 @@
 		<input type="submit">
 	</form>  -->
 	
-	<h1>Get all students...</h1>
+<!-- 	<h1>Get all students...</h1>
 	<form action = "getStudent", method = "get">
+	</form> --> 
+	
+	<h1>Get a student by using id...</h1>
+	<form action = "getStudentWithId", method = "get">
+		Enter student id: <input type="text" name="id">
+		<input type="submit">
 	</form> 
 	
 	
